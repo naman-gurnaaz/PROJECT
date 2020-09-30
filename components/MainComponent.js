@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
 import Menu from './MenuComponent';
 import { DISHES } from '../shared/dishes';
+import Dishdetail from './DishdetailComponent';
+import { View } from 'react-native';
+
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dishes: DISHES
+      dishes: DISHES,
+      selectedDish : null
     };
+  }	  
+
+
+  onDishselect(dishId) {
+    this.setState({selectedDish: dishId});
   }
 
   render() {
 
-    return (
-        <Menu dishes={this.state.dishes} />
-    );
-  }
+
+    return (	    
+      <View style = {{flex: 1}}>
+        <Menu dishes={this.state.dishes} 
+          onPress={(dishId) => this.onDishselect(dishId)}
+        />
+        <Dishdetail dish = {this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]}/>
+      </View>
+    );	    
+  }	  
 }
 
-export default Main; 
+export default Main;
