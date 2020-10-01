@@ -6,10 +6,16 @@ import { View, Platform, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import Aboutus from './AboutComponent';
+import Contact from './ContactComponent';
+
+const HomeNavigator = createStackNavigator();
+
+const AboutNavigator = createStackNavigator();
 
 const MenuNavigator = createStackNavigator();
 
-const HomeNavigator = createStackNavigator();
+const ContactNavigator = createStackNavigator();
 
 const MainNavigator = createDrawerNavigator();
 
@@ -70,6 +76,57 @@ function HomeNavigatorScreen() {
   );
 }
 
+function AboutNavigatorScreen() {
+  return(
+    <AboutNavigator.Navigator
+      initialRouteName='About Us'
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#512DA8"
+        },
+        
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff"            
+          }
+        }}
+    >
+
+      <AboutNavigator.Screen 
+        name = "About Us"
+        component = {Aboutus}
+        options = {{ headerTitle: "About Us"}}
+      />
+
+    </AboutNavigator.Navigator>
+  );
+}
+
+function ContactNavigatorScreen() {
+  return(
+    <ContactNavigator.Navigator
+      initialRouteName='Contact Us'
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#512DA8"
+        },
+        
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff"            
+          }
+        }}
+    >
+
+      <ContactNavigator.Screen 
+        name = "Contact Us"
+        component = {Contact}
+      />
+
+    </ContactNavigator.Navigator>
+  );
+}
+
 function MainNavigatorScreen() {
   return(
     <MainNavigator.Navigator drawerStyle= {{backgroundColor : '#D1C4E9'}} >
@@ -81,9 +138,21 @@ function MainNavigatorScreen() {
       />
 
       <MainNavigator.Screen 
+        name = "About Us"
+        component = {AboutNavigatorScreen}
+        options = {{title: "About Us"}}
+      />
+
+      <MainNavigator.Screen 
         name = "Menu"
         component = {MenuNavigatorScreen}
         options = {{title: "Menu"}}
+      />
+
+      <MainNavigator.Screen 
+        name = "Contact Us"
+        component = {ContactNavigatorScreen}
+        options = {{title: "Contact Us"}}
       />
 
     </MainNavigator.Navigator>
