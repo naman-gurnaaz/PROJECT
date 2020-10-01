@@ -97,7 +97,7 @@ class Main extends Component {
 
 
     return (
-      <View style={{flex:1,paddingTop:Platform.OS==='ios'?0:StatusBar.currentHeight}} >
+      <View style={{flex:1, paddingTop: Platform.OS ==='ios'? 0: StatusBar.currentHeight}} >
         <NavigationContainer>
           <MainNavigatorScreen />           
         </NavigationContainer>
