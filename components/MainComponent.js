@@ -9,6 +9,24 @@ import { createDrawerNavigator, DrawerItem, DrawerItemList, DrawerContentScrollV
 import Aboutus from './AboutComponent';
 import Contact from './ContactComponent';
 import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+
+const mapStateToProps = (state) => {
+    return {
+        dishes: state.dishes,
+        promotions: state.promotions,
+        leaders: state.leaders,
+        comments: state.comments
+    }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
+})
 
 const HomeNavigator = createStackNavigator();
 
@@ -274,8 +292,14 @@ function MainNavigatorScreen() {
 
 class Main extends Component {
 
-  render() {
+  componentDidMount() {
+    this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
+    this.props.fetchLeaders();
+  }
 
+  render() {
 
     return (
       <View style={{flex:1, paddingTop: Platform.OS ==='ios'? 0: StatusBar.currentHeight}} >
@@ -311,4 +335,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
