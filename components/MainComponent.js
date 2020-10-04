@@ -11,6 +11,8 @@ import Contact from './ContactComponent';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+import Reservation from './ReservationComponent';
+
 
 const mapStateToProps = (state) => {
     return {
@@ -35,6 +37,8 @@ const AboutNavigator = createStackNavigator();
 const MenuNavigator = createStackNavigator();
 
 const ContactNavigator = createStackNavigator();
+
+const ReservationNavigator = createStackNavigator();
 
 const MainNavigator = createDrawerNavigator();
 
@@ -217,6 +221,44 @@ function ContactNavigatorScreen() {
   );
 }
 
+function ReservationNavigatorScreen() {
+  return(
+    <ReservationNavigator.Navigator
+      initialRouteName='Reserve Table'
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#512DA8"
+        },
+        
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff"            
+          }
+        }}
+    >
+
+      <ReservationNavigator.Screen 
+        name = "Reserve Table"
+        component = {Reservation}
+        options = {({ navigation }) => ({
+          headerLeft: () =>(
+            <Icon 
+              name = "menu"
+              size = {24}
+              color = "white"
+              onPress = { () => {
+                navigation.toggleDrawer();
+              }}
+            />
+          )
+        })
+        }
+      />
+
+    </ReservationNavigator.Navigator>
+  );
+}
+
 function MainNavigatorScreen() {
   return(
     <MainNavigator.Navigator
@@ -277,6 +319,21 @@ function MainNavigatorScreen() {
           drawerIcon : ({tintColor}) => (
             <Icon 
               name= "address-card"
+              type = "font-awesome"
+              size = {30}
+              color = {tintColor}
+            />
+          )
+        })}
+      />
+
+      <MainNavigator.Screen 
+        name = "Reserve Table"
+        component = {ReservationNavigatorScreen}
+        options = {({title: "Reserve Table"}, {
+          drawerIcon : ({tintColor}) => (
+            <Icon 
+              name= "cutlery"
               type = "font-awesome"
               size = {30}
               color = {tintColor}
