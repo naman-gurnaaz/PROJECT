@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Menu from './MenuComponent';
 import Home from './HomeComponent';
 import Dishdetail from './DishdetailComponent';
+import Favourites from './FavouritesComponent';
 import { View, Platform, StatusBar, Image, StyleSheet, SafeAreaView, ScrollView, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -19,7 +20,8 @@ const mapStateToProps = (state) => {
         dishes: state.dishes,
         promotions: state.promotions,
         leaders: state.leaders,
-        comments: state.comments
+        comments: state.comments,
+        favourites: state.favourites
     }
 };
 
@@ -39,6 +41,8 @@ const MenuNavigator = createStackNavigator();
 const ContactNavigator = createStackNavigator();
 
 const ReservationNavigator = createStackNavigator();
+
+const FavouritesNavigator = createStackNavigator();
 
 const MainNavigator = createDrawerNavigator();
 
@@ -259,6 +263,44 @@ function ReservationNavigatorScreen() {
   );
 }
 
+function FavouritesNavigatorScreen() {
+  return(
+    <FavouritesNavigator.Navigator
+      initialRouteName='Favourites'
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#512DA8"
+        },
+        
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff"            
+          }
+        }}
+    >
+
+      <FavouritesNavigator.Screen 
+        name = "Favourites"
+        component = {Favourites}
+        options = {({ navigation }) => ({
+          headerLeft: () =>(
+            <Icon 
+              name = "menu"
+              size = {24}
+              color = "white"
+              onPress = { () => {
+                navigation.toggleDrawer();
+              }}
+            />
+          )
+        })
+        }
+      />
+
+    </FavouritesNavigator.Navigator>
+  );
+}
+
 function MainNavigatorScreen() {
   return(
     <MainNavigator.Navigator
@@ -341,6 +383,21 @@ function MainNavigatorScreen() {
           )
         })}
       />
+
+      <MainNavigator.Screen 
+        name = "Favourites"
+        component = {FavouritesNavigatorScreen}
+        options = {({title: "Favourites"}, {
+          drawerIcon : ({tintColor}) => (
+            <Icon 
+              name= "heart"
+              type = "font-awesome"
+              size = {30}
+              color = {tintColor}
+            />
+          )
+        })}
+      />  
 
     </MainNavigator.Navigator>
   );
